@@ -26,6 +26,7 @@ public class RNDisableBatteryOptimizationsModule extends ReactContextBaseJavaMod
     if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
       intent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
     } else {
+      String packageName = reactContext.getPackageName();
       intent.setData(Uri.parse("package:" + packageName));
       intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
     }
