@@ -22,11 +22,14 @@ public class RNDisableBatteryOptimizationsModule extends ReactContextBaseJavaMod
 
   @ReactMethod
   public void openBatteryModal() {
-    String packageName = reactContext.getPackageName();
     Intent intent = new Intent();
+    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+      intent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+    } else {
+      intent.setData(Uri.parse("package:" + packageName));
+      intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+    }
     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
-    intent.setData(Uri.parse("package:" + packageName));
     reactContext.startActivity(intent);
   }
 
